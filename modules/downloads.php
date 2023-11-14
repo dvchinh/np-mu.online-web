@@ -17,9 +17,9 @@ try {
 
 	if(!mconfig('active')) throw new Exception(lang('error_47',true));
 
-	$downloadCLIENTS = [];
-	$downloadPATCHES = [];
-	$downloadTOOLS = [];
+	$downloadCLIENTS = null;
+	$downloadPATCHES = null;
+	$downloadTOOLS = null;
 	
 	$downloadsCACHE = loadCache('downloads.cache');
 	if(is_array($downloadsCACHE)) {
