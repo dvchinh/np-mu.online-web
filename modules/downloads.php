@@ -14,12 +14,12 @@
 echo '<div class="page-title"><span>'.lang('module_titles_txt_8',true).'</span></div>';
 
 try {
-	
+
 	if(!mconfig('active')) throw new Exception(lang('error_47',true));
-	
-	$downloadCLIENTS = '';
-	$downloadPATCHES = '';
-	$downloadTOOLS = '';
+
+	$downloadCLIENTS = [];
+	$downloadPATCHES = [];
+	$downloadTOOLS = [];
 	
 	$downloadsCACHE = loadCache('downloads.cache');
 	if(is_array($downloadsCACHE)) {
@@ -37,7 +37,7 @@ try {
 			}
 		}
 	}
-	
+
 	if(mconfig('show_client_downloads')) {
 		if(is_array($downloadCLIENTS)) {
 			echo '<div class="panel panel-downloads">';
