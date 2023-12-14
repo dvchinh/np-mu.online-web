@@ -24,6 +24,7 @@ try {
 	if(!is_array($AccountCharacters)) throw new Exception(lang('error_46',true));
 	
 	if(isset($_POST['submit'])) {
+		redirect(1, 'news/1/'); /* [deprecated] must "reset" in game */
 		try {
 			$Character->setUserid($_SESSION['userid']);
 			$Character->setUsername($_SESSION['username']);
