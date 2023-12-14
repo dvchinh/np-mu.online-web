@@ -124,6 +124,7 @@ function templateCastleSiegeWidget() {
 
 function templateLanguageSelector() {
 	$langList = array(
+		'vi' => array('Vietnamese', 'VN'),
 		'en' => array('English', 'US'),
 		'es' => array('Español', 'ES'),
 		'ph' => array('Filipino', 'PH'),
