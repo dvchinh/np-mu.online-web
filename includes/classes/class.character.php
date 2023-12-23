@@ -477,19 +477,19 @@ class Character {
 		
 		// skill enhancement tree points
 		$skillEnhancementPoints = 0;
-		
+
 		// skill enhancement support
 		if(defined('_CLMN_ML_I4SP_')) {
 			$skillEnhancementTreeEnabled = array_key_exists(_CLMN_ML_I4SP_, $characterMasterLvlData) ? true : false;
 		}
-		
+
 		// skill enhancement points
-		if($skillEnhancementTreeEnabled) {
+		if($skillEnhancementTreeEnabled || true) {
 			if($characterLevel > $this->_skilEnhanceTreeLevel) {
 				$skillEnhancementPoints = $characterLevel-$this->_skilEnhanceTreeLevel;
 			}
 		}
-		
+
 		// zen requirement
 		$zenRequirement = mconfig('zen_cost');
 		
@@ -534,17 +534,30 @@ class Character {
 		if(defined('_CLMN_ML_EXP_')) if(array_key_exists(_CLMN_ML_EXP_, $characterMasterLvlData)) $query .= ", "._CLMN_ML_EXP_." = 0";
 		if(defined('_CLMN_ML_NEXP_')) if(array_key_exists(_CLMN_ML_NEXP_, $characterMasterLvlData)) $query .= ", "._CLMN_ML_NEXP_." = 0";
 		if($skillEnhancementTreeEnabled && $skillEnhancementPoints > 0) $query .= ", "._CLMN_ML_I4SP_." = :skillenhancementpoints";
-		$query .= ", "._CLMN_ML_SKILL_." = dbo.NPF_CLEAR_MASTER_SKILL("._CLMN_ML_SKILL_.")";
+		$query .= ", "._CLMN_ML_SKILL_." = dbo.NPF_CLEAR_SKILL_TREE('mt3', "._CLMN_ML_SKILL_.")";
 		$query .= " WHERE "._CLMN_ML_NAME_." = :player";
-		
+
 		// clear magic list (skills)
 		$resetMagicList = $this->_resetMagicList($this->_character);
 		if(!$resetMagicList) throw new Exception(lang('error_21'));
-		
+
 		// clear master skill tree
 		$clearMasterSkillTree = $this->muonline->query($query, $data);
 		if(!$clearMasterSkillTree) throw new Exception(lang('error_21'));
-		
+		// MT4: Enhance Skill-Tree
+		$data = array(
+			'player' => $this->_character,
+			'enhancepoints' => $skillEnhancementPoints,
+		);
+		$query = "";
+		$query .= " UPDATE EnhanceSkillTree SET";
+		$query .= "  EnhancePoint = :enhancepoints";
+		$query .= ", EnhanceSkill = dbo.NPF_CLEAR_SKILL_TREE('mt4', EnhanceSkillPassive)";
+		$query .= ", EnhanceSkillPassive = dbo.NPF_CLEAR_SKILL_TREE('mt4.passive', EnhanceSkillPassive)";
+		$query .= " WHERE Name = :player";
+		$clearEnhanceSkillTree = $this->muonline->query($query, $data);
+		if(!$clearEnhanceSkillTree) throw new Exception(lang('error_21'));
+
 		// deduct zen
 		if($zenRequirement > 0) if(!$this->DeductZEN($this->_character, $zenRequirement)) throw new Exception(lang('error_34'));
 		
