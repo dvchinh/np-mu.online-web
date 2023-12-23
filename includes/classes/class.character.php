@@ -534,6 +534,7 @@ class Character {
 		if(defined('_CLMN_ML_EXP_')) if(array_key_exists(_CLMN_ML_EXP_, $characterMasterLvlData)) $query .= ", "._CLMN_ML_EXP_." = 0";
 		if(defined('_CLMN_ML_NEXP_')) if(array_key_exists(_CLMN_ML_NEXP_, $characterMasterLvlData)) $query .= ", "._CLMN_ML_NEXP_." = 0";
 		if($skillEnhancementTreeEnabled && $skillEnhancementPoints > 0) $query .= ", "._CLMN_ML_I4SP_." = :skillenhancementpoints";
+		$query .= ", "._CLMN_ML_SKILL_." = dbo.NPF_CLEAR_MASTER_SKILL("._CLMN_ML_SKILL_.")";
 		$query .= " WHERE "._CLMN_ML_NAME_." = :player";
 		
 		// clear magic list (skills)
