@@ -16,4 +16,4 @@
 // 
 // It is recommended that you match your website's
 // timezone with your server timezone.
-date_default_timezone_set('UTC');
+date_default_timezone_set('Asia/Ho_Chi_Minh');

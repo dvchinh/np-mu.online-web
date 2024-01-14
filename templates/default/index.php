@@ -121,10 +121,10 @@ if(!isset($_REQUEST['subpage'])) {
 								<time id="tServerTime">&nbsp;</time> <span id="tServerDate">&nbsp;</span>
 							</div>
 							
-							<div class="col-xs-6 text-left">
+							<div class="col-xs-6 text-left hidden">
 								<?php echo lang('user_time'); ?>:
 							</div>
-							<div class="col-xs-6 text-right">
+							<div class="col-xs-6 text-right hidden">
 								<time id="tLocalTime">&nbsp;</time> <span id="tLocalDate">&nbsp;</span>
 							</div>
 						</div>
