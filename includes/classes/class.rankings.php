@@ -43,6 +43,7 @@ class Rankings {
 		// rankings menu
 		$this->_rankingsMenu = array(
 			// language phrase, module, status, file-exclusive (array)
+			array(lang('rankings_txt_22',true), 'master', mconfig('rankings_enable_master')),
 			array(lang('rankings_txt_1',true), 'level', mconfig('rankings_enable_level')),
 			array(lang('rankings_txt_2',true), 'resets', mconfig('rankings_enable_resets')),
 			array(lang('rankings_txt_3',true), 'killers', mconfig('rankings_enable_pk')),
@@ -51,7 +52,6 @@ class Rankings {
 			array(lang('rankings_txt_6',true), 'online', mconfig('rankings_enable_online'), array('xteam')),
 			array(lang('rankings_txt_7',true), 'votes', mconfig('rankings_enable_votes')),
 			array(lang('rankings_txt_8',true), 'gens', mconfig('rankings_enable_gens')),
-			array(lang('rankings_txt_22',true), 'master', mconfig('rankings_enable_master')),
 		);
 		
 		// extra menu links
@@ -177,7 +177,7 @@ class Rankings {
 			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." "._CLMN_CHR_NAME_.", "._CLMN_ML_LVL_.", "._CLMN_CHR_CLASS_.", "._CLMN_CHR_LVL_.", "._CLMN_CHR_MAP_." FROM "._TBL_CHR_." WHERE "._CLMN_CHR_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND "._CLMN_ML_LVL_." > 0 ORDER BY "._CLMN_ML_LVL_." DESC");
 		} else {
 			// Master Level in separate table
-			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." t1."._CLMN_ML_NAME_.", t1."._CLMN_ML_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_MASTERLVL_." AS t1 INNER JOIN "._TBL_CHR_." AS t2 ON t1."._CLMN_ML_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_ML_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND t1."._CLMN_ML_LVL_." > 0 ORDER BY t1."._CLMN_ML_LVL_." DESC, t2."._CLMN_CHR_LVL_." DESC");
+			$result = $this->mu->query_fetch("SELECT TOP ".$this->_results." t1."._CLMN_ML_NAME_.", t1."._CLMN_ML_LVL_.", t2."._CLMN_CHR_CLASS_.", t2."._CLMN_CHR_LVL_.", t2."._CLMN_CHR_MAP_." FROM "._TBL_MASTERLVL_." AS t1 INNER JOIN "._TBL_CHR_." AS t2 ON t1."._CLMN_ML_NAME_." = t2."._CLMN_CHR_NAME_." WHERE t1."._CLMN_ML_NAME_." NOT IN(".$this->_rankingsExcludeChars().") AND t2."._CLMN_CHR_ACCID_." NOT IN('1111', '3333') AND t1."._CLMN_ML_LVL_." > 0 ORDER BY t1."._CLMN_ML_LVL_." DESC, t2."._CLMN_CHR_LVL_." DESC");
 		}
 		if(!is_array($result)) return;
 
